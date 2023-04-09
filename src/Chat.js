@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react'
-import uuid from "uuid";
+import * as uuid from 'uuid';
 function Chat({socket,username,room}) {
     const  [currentMessage,setCurrentMessage]=useState('')
     const [messageList,setMessageList]=useState([])
@@ -10,7 +10,7 @@ function Chat({socket,username,room}) {
                 room:room,
                 sender:username,
                 message:currentMessage,
-                time:new Date(Date.now()).getHours()+ ':' +new Date(Date.now()).getMinutes()
+                time:new Date(Date.now()).getDate()+'-'+new Date(Date.now()).getMonth()+'-'+new Date(Date.now()).getFullYear()+' '+new Date(Date.now()).getHours()+':'+new Date(Date.now()).getMinutes()
             }
             await socket.emit('send_message',messageData)
             setMessageList(list=>[...list,messageData])
@@ -37,6 +37,7 @@ function Chat({socket,username,room}) {
             <div key={messageData.id}>
             <h4>{messageData.sender}</h4>
             <h2>{messageData.message}</h2>
+            <h2>{messageData.time}</h2>
             </div>
             )
          })}
